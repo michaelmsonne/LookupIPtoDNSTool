@@ -46,11 +46,15 @@
             this.loadIPsFromcsvFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonGetCurrentConnectedIPs = new System.Windows.Forms.Button();
+            this.lblValidIPCount = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBoxFormActions = new System.Windows.Forms.GroupBox();
             this.groupBoxIPs.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultDataGridView)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.groupBoxFormActions.SuspendLayout();
             this.SuspendLayout();
             // 
             // ipAddressTextBox
@@ -59,26 +63,25 @@
             this.ipAddressTextBox.Multiline = true;
             this.ipAddressTextBox.Name = "ipAddressTextBox";
             this.ipAddressTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ipAddressTextBox.Size = new System.Drawing.Size(183, 647);
+            this.ipAddressTextBox.Size = new System.Drawing.Size(183, 609);
             this.ipAddressTextBox.TabIndex = 0;
+            this.ipAddressTextBox.TextChanged += new System.EventHandler(this.ipAddressTextBox_TextChanged);
             // 
             // groupBoxIPs
             // 
-            this.groupBoxIPs.Controls.Add(this.buttonGetCurrentConnectedIPs);
-            this.groupBoxIPs.Controls.Add(this.cleanupIPListButton);
-            this.groupBoxIPs.Controls.Add(this.cancelButton);
+            this.groupBoxIPs.Controls.Add(this.label1);
+            this.groupBoxIPs.Controls.Add(this.lblValidIPCount);
             this.groupBoxIPs.Controls.Add(this.ipAddressTextBox);
-            this.groupBoxIPs.Controls.Add(this.lookupButton);
             this.groupBoxIPs.Location = new System.Drawing.Point(12, 32);
             this.groupBoxIPs.Name = "groupBoxIPs";
-            this.groupBoxIPs.Size = new System.Drawing.Size(195, 759);
+            this.groupBoxIPs.Size = new System.Drawing.Size(195, 649);
             this.groupBoxIPs.TabIndex = 1;
             this.groupBoxIPs.TabStop = false;
             this.groupBoxIPs.Text = "IP´s to get information about";
             // 
             // cleanupIPListButton
             // 
-            this.cleanupIPListButton.Location = new System.Drawing.Point(126, 701);
+            this.cleanupIPListButton.Location = new System.Drawing.Point(126, 45);
             this.cleanupIPListButton.Name = "cleanupIPListButton";
             this.cleanupIPListButton.Size = new System.Drawing.Size(63, 23);
             this.cleanupIPListButton.TabIndex = 4;
@@ -89,7 +92,7 @@
             // cancelButton
             // 
             this.cancelButton.Enabled = false;
-            this.cancelButton.Location = new System.Drawing.Point(6, 730);
+            this.cancelButton.Location = new System.Drawing.Point(6, 74);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(183, 23);
             this.cancelButton.TabIndex = 3;
@@ -99,7 +102,7 @@
             // 
             // lookupButton
             // 
-            this.lookupButton.Location = new System.Drawing.Point(6, 701);
+            this.lookupButton.Location = new System.Drawing.Point(6, 45);
             this.lookupButton.Name = "lookupButton";
             this.lookupButton.Size = new System.Drawing.Size(117, 23);
             this.lookupButton.TabIndex = 2;
@@ -146,6 +149,7 @@
             this.resultDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.resultDataGridView.Location = new System.Drawing.Point(7, 18);
             this.resultDataGridView.Name = "resultDataGridView";
+            this.resultDataGridView.ReadOnly = true;
             this.resultDataGridView.Size = new System.Drawing.Size(562, 704);
             this.resultDataGridView.TabIndex = 0;
             // 
@@ -205,7 +209,7 @@
             // 
             // buttonGetCurrentConnectedIPs
             // 
-            this.buttonGetCurrentConnectedIPs.Location = new System.Drawing.Point(6, 672);
+            this.buttonGetCurrentConnectedIPs.Location = new System.Drawing.Point(6, 16);
             this.buttonGetCurrentConnectedIPs.Name = "buttonGetCurrentConnectedIPs";
             this.buttonGetCurrentConnectedIPs.Size = new System.Drawing.Size(183, 23);
             this.buttonGetCurrentConnectedIPs.TabIndex = 5;
@@ -213,12 +217,44 @@
             this.buttonGetCurrentConnectedIPs.UseVisualStyleBackColor = true;
             this.buttonGetCurrentConnectedIPs.Click += new System.EventHandler(this.buttonGetCurrentConnectedIPs_Click);
             // 
+            // lblValidIPCount
+            // 
+            this.lblValidIPCount.AutoSize = true;
+            this.lblValidIPCount.Location = new System.Drawing.Point(81, 631);
+            this.lblValidIPCount.Name = "lblValidIPCount";
+            this.lblValidIPCount.Size = new System.Drawing.Size(13, 13);
+            this.lblValidIPCount.TabIndex = 6;
+            this.lblValidIPCount.Text = "0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 631);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(80, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Valid IP´s in list:";
+            // 
+            // groupBoxFormActions
+            // 
+            this.groupBoxFormActions.Controls.Add(this.buttonGetCurrentConnectedIPs);
+            this.groupBoxFormActions.Controls.Add(this.cleanupIPListButton);
+            this.groupBoxFormActions.Controls.Add(this.lookupButton);
+            this.groupBoxFormActions.Controls.Add(this.cancelButton);
+            this.groupBoxFormActions.Location = new System.Drawing.Point(12, 687);
+            this.groupBoxFormActions.Name = "groupBoxFormActions";
+            this.groupBoxFormActions.Size = new System.Drawing.Size(195, 104);
+            this.groupBoxFormActions.TabIndex = 6;
+            this.groupBoxFormActions.TabStop = false;
+            this.groupBoxFormActions.Text = "Actions";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 816);
+            this.Controls.Add(this.groupBoxFormActions);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupBox1);
@@ -239,6 +275,7 @@
             this.statusStrip.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBoxFormActions.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,6 +300,9 @@
         private System.Windows.Forms.ToolStripMenuItem loadIPsFromcsvFileToolStripMenuItem;
         private System.Windows.Forms.Button cleanupIPListButton;
         private System.Windows.Forms.Button buttonGetCurrentConnectedIPs;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblValidIPCount;
+        private System.Windows.Forms.GroupBox groupBoxFormActions;
     }
 }
 

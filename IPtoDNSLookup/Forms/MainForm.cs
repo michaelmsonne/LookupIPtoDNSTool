@@ -100,6 +100,7 @@ namespace LookupsIPsToDNS.Forms
             {
                 var invalidIpList = string.Join("\n", iPs);
                 var result = MessageBox.Show($@"The following IP addresses are invalid:
+
 {invalidIpList}
 
 Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -362,6 +363,30 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
             }
         }
 
+        private int CountValidIPs(string[] lines)
+        {
+            int validIPCount = 0;
+
+            foreach (string line in lines)
+            {
+                // Trim each line to remove leading and trailing whitespaces
+                string trimmedLine = line.Trim();
+
+                // Check if the trimmed line is a valid IP address
+                if (!string.IsNullOrEmpty(trimmedLine) && IPAddress.TryParse(trimmedLine, out IPAddress ipAddress))
+                {
+                    // Check the number of octets (IPv4) or the presence of colons (IPv6)
+                    if ((ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && trimmedLine.Split('.').Length == 4) ||
+                        (ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6 && trimmedLine.Contains(':')))
+                    {
+                        validIPCount++;
+                    }
+                }
+            }
+
+            return validIPCount;
+        }
+
         #endregion Main shared code
 
         #region Menu code
@@ -525,6 +550,24 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
         }
 
         #endregion Form code
-        
+
+        private void ipAddressTextBox_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // Split the multiline TextBox text into lines
+                string[] lines = ipAddressTextBox.Text.Split('\n');
+
+                // Count the number of valid IP addresses
+                int validIPCount = CountValidIPs(lines);
+
+                // Display the result
+                lblValidIPCount.Text = $@"{validIPCount}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"Error counting valid IP addresses: {ex.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
