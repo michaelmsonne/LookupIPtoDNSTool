@@ -355,8 +355,6 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
             {
                 using (var frm = new AboutBox())
                 {
-                    //LogClass.LogWriteProgram(LogFileProgramProgramMessageTxt + "Opened Convert certificate form by user.");
-
                     // Create an instance of the form to open
                     frm.ShowDialog();
                 }
