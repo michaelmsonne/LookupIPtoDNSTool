@@ -31,24 +31,22 @@ $IPtoDNSLookupPath = Join-Path $ParentDirectory "bin\Release\IPtoDNSLookup.exe"
 $FileVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($IPtoDNSLookupPath).FileVersion
 
 #Delete old .exe file there not need to be used anymore 2 sec. old or more
-Write-Host "Deleting old files in output $ParentDirectory\*IPtoDNSLookup*Build at*"
+Write-Host "Deleting old files in output $ParentDirectory\bin\Release\*IPtoDNSLookup*Build at*"
 Get-ChildItem "$ParentDirectory\*IPtoDNSLookup*Build at*" -File | Where-Object CreationTime -lt (Get-Date).AddSeconds(-2) | Remove-Item -Force
-Write-Host "Removed old files in output $ParentDirectory\*IPtoDNSLookup*Build at*"
+Write-Host "Deleted old files in output $ParentDirectory\bin\Release\*IPtoDNSLookup*Build at*"
 
 #Rename file to v. and buildtime
 Write-Host "Renaming output $IPtoDNSLookupPath to format IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format "ddMMyyyy-HHmmss").exe"
 Rename-Item -Path $IPtoDNSLookupPath -NewName ("IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format 'ddMMyyyy-HHmmss').exe") -Force
 Write-Host "Renamed output $IPtoDNSLookupPath to format IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format 'ddMMyyyy-HHmmss').exe"
 
-#Show task is done
-Write-Host "Build task done! Output file is:"
+#Show task is done - Get filename for the new file
+$files = Get-ChildItem -Path "$ParentDirectory\bin\Release" -Filter "*IPtoDNSLookup*Build at*"
+Write-Host "Build task done!"
+$outputInfo = "Output file are: $($files.FullName -join ', ')"
 
-#Get filename for the new file
-$files = Get-ChildItem -Path $ParentDirectory -Filter "*IPtoDNSLookup*Build at*"
-
-foreach ($file in $files) {
-    Write-Host $file.Name
-}
+# Display the output on the same line
+Write-Host $outputInfo
 
 # Create hash file for output
 $exeFile = Get-ChildItem -Path "$ParentDirectory\bin\Release" -Filter "*IPtoDNSLookup*Build at*.exe" | Select-Object -First 1
