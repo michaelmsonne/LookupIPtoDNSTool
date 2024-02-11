@@ -24,18 +24,21 @@ namespace LookupsIPsToDNS.Forms
 
         #region MyRegion
 
-        public string AssemblyVersion
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
+        public string AssemblyVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         public MainForm()
         {
             InitializeComponent();
+        }
 
+        public sealed override string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
+        }
+
+        private void Mainform_Load(object sender, EventArgs e)
+        {
             // Set up the DataTable columns
             _table.Columns.Add("IP Address", typeof(string));
             _table.Columns.Add("Domain Name", typeof(string));
@@ -54,16 +57,7 @@ namespace LookupsIPsToDNS.Forms
 
             // Set title
             Text = Text + @" v. " + AssemblyVersion;
-        }
 
-        public sealed override string Text
-        {
-            get { return base.Text; }
-            set { base.Text = value; }
-        }
-
-        private void Mainform_Load(object sender, EventArgs e)
-        {
             // Set the default button to the Lookup button
             FormatOutputGrid();
         }
@@ -245,158 +239,33 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
 
                 // Perform any other cleanup or post-processing here
             }
-
-            /*string[] ipAddresses = ipAddressTextBox.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-            try
-            {
-                toolStripStatusLabel.Text = @"Running... Please wait for task to complete...";
-
-                HashSet<string> processedIPs = new HashSet<string>(); // Create a HashSet to store processed IP addresses
-                if (processedIPs == null) throw new ArgumentNullException(nameof(processedIPs));
-
-                Parallel.ForEach(ipAddresses, (ipAddress, state) =>
-                {
-                    if (_lookupWorker.CancellationPending)
-                    {
-                        state.Break();
-                        return;
-                    }
-
-                    try
-                    {
-                        IPHostEntry hostEntry = Dns.GetHostEntry(IPAddress.Parse(ipAddress));
-
-                        // Check if IP address has already been processed
-                        lock (processedIPs)
-                        {
-                            if (processedIPs.Contains(ipAddress))
-                            {
-                                // Skip adding the row
-                                return;
-                            }
-
-                            // Add the IP address to the processed set
-                            processedIPs.Add(ipAddress);
-                        }
-
-                        DataRow row = _table.NewRow();
-                        row["IP Address"] = ipAddress;
-                        row["Domain Name"] = hostEntry.HostName;
-
-                        // update DataTable on UI thread
-                        Invoke(new Action(() =>
-                        {
-                            _table.Rows.Add(row);
-                            int lastIndex = resultDataGridView.Rows.Count - 1;
-                            // Scroll to the end of the DataGridView control
-                            resultDataGridView.FirstDisplayedScrollingRowIndex = lastIndex;
-                        }));
-#if DEBUG
-        MessageBox.Show($"IP Address: {ipAddress}, Domain Name: {hostEntry.HostName}");
-#endif
-                    }
-                    catch (SocketException ex)
-                    {
-                        // The host does not exist
-                        if (ex.ErrorCode == 11001)
-                        {
-                            DataRow row = _table.NewRow();
-                            row["IP Address"] = ipAddress;
-                            row["Domain Name"] = "The host does not exist (Non-existent domain)";
-                            Invoke(new Action(() =>
-                            {
-                                _table.Rows.Add(row);
-                                int lastIndex = resultDataGridView.Rows.Count - 1;
-                                // Scroll to the end of the DataGridView control
-                                resultDataGridView.FirstDisplayedScrollingRowIndex = lastIndex;
-                            }));
-                        }
-                        else
-                        {
-#if DEBUG
-            MessageBox.Show($"Error looking up IP address {ipAddress}: {ex.Message}");
-            // handle any other errors
-#endif
-                        }
-                    }
-                });
-
-
-                /*Parallel.ForEach(ipAddresses, (ipAddress, state) =>
-                {
-                    if (lookupWorker.CancellationPending)
-                    {
-                        state.Break();
-                        return;
-                    }
-
-                    try
-                    {
-                        IPHostEntry hostEntry = Dns.GetHostEntry(IPAddress.Parse(ipAddress));
-                        DataRow row = table.NewRow();
-                        row["IP Address"] = ipAddress;
-                        row["Domain Name"] = hostEntry.HostName;
-                        
-                        // update DataTable on UI thread
-                        Invoke(new Action(() =>
-                        {
-                            table.Rows.Add(row);
-                            int lastIndex = resultDataGridView.Rows.Count - 1;
-                            resultDataGridView.FirstDisplayedScrollingRowIndex = lastIndex; // Scroll to the end of the DataGridView control
-                        }));
-#if DEBUG
-                        MessageBox.Show($"IP Address: {ipAddress}, Domain Name: {hostEntry.HostName}");
-#endif
-                    }
-                    catch (SocketException ex)
-                    {
-                        if (ex.ErrorCode == 11001) // The host does not exist
-                        {
-                            DataRow row = table.NewRow();
-                            row["IP Address"] = ipAddress;
-                            row["Domain Name"] = "The host does not exist (Non-existent domain)";
-                            Invoke(new Action(() =>
-                            {
-                                table.Rows.Add(row);
-                                int lastIndex = resultDataGridView.Rows.Count - 1;
-                                resultDataGridView.FirstDisplayedScrollingRowIndex = lastIndex; // Scroll to the end of the DataGridView control
-                            }));
-                        }
-                        else
-                        {
-#if DEBUG
-                            MessageBox.Show($"Error looking up IP address {ipAddress}: {ex.Message}");
-                            // handle any other errors
-#endif
-                        }
-                    }
-                });#1#
-            }
-            catch (OperationCanceledException)
-            {
-                // ignore cancellation exception
-            }*/
         }
 
         private void LookupWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            // Check if the operation was cancelled, completed with an error, or completed successfully
             if (e.Error != null)
             {
+                // An error occurred during the operation
                 MessageBox.Show($@"An error occurred while performing the DNS lookup: {e.Error.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                // Set status in form status bar
                 toolStripStatusLabel.Text = @"Finished with error(s).";
             }
             else if (e.Cancelled)
             {
+                // The operation was cancelled by the user
                 MessageBox.Show(@"DNS lookup cancelled by user.", @"Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                // Set status in form status bar
                 toolStripStatusLabel.Text = @"Finished - cancelled by user.";
             }
             else
             {
+                // The operation completed successfully
                 MessageBox.Show(@"DNS lookup completed successfully.", @"Completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                // Set status in form status bar
                 toolStripStatusLabel.Text = @"Finished.";
             }
 
@@ -465,6 +334,7 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
                 }
             }
 
+            // Return the list of valid IP addresses
             return ipAddresses;
         }
 
@@ -500,7 +370,7 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
 
         private void loadIPsFromcsvFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            var openFileDialog = new OpenFileDialog
             {
                 Title = @"Select CSV File",
                 Filter = @"CSV Files|*.csv",
@@ -509,7 +379,7 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string filePath = openFileDialog.FileName;
+                var filePath = openFileDialog.FileName;
 
                 // Read the IP addresses from the selected CSV file
                 List<string> ipAddresses = ReadIpAddressesFromCsv(filePath);
