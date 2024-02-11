@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
@@ -138,6 +139,7 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
                 cleanupIPListButton.Enabled = false;
                 buttonExporttoCSV.Enabled = false;
                 loadIPsFromcsvFileToolStripMenuItem.Enabled = false;
+                buttonGetCurrentConnectedIPs.Enabled = false;
 
                 if (!_lookupWorker.IsBusy)
                 {
@@ -277,6 +279,7 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
             cleanupIPListButton.Enabled = true;
             buttonExporttoCSV.Enabled = true;
             loadIPsFromcsvFileToolStripMenuItem.Enabled = true;
+            buttonGetCurrentConnectedIPs.Enabled = true;
 
             // Check if DataGridView has any rows and update Clear button accordingly
             UpdateClearButton();
@@ -342,6 +345,21 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
         {
             // Get the IP addresses from the text box and start the lookup
             DoIpLookupWork();
+        }
+
+        private void UpdateTextBox(TcpConnectionInformation[] connections)
+        {
+            // Clear existing text in the TextBox
+            ipAddressTextBox.Text = string.Empty;
+
+            // Display remote IP addresses in the TextBox
+            foreach (var connection in connections)
+            {
+                if (!IPAddress.IsLoopback(connection.RemoteEndPoint.Address))
+                {
+                    ipAddressTextBox.AppendText($"{connection.RemoteEndPoint.Address}\r\n");
+                }
+            }
         }
 
         #endregion Main shared code
@@ -489,6 +507,24 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
             }
         }
 
+        private void buttonGetCurrentConnectedIPs_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Get active TCP connections for the local computer
+                var properties = IPGlobalProperties.GetIPGlobalProperties();
+                var connections = properties.GetActiveTcpConnections();
+
+                // Display remote IP addresses in the TextBox
+                UpdateTextBox(connections);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"Error retrieving active connections: {ex.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         #endregion Form code
+        
     }
 }
