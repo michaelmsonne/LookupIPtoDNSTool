@@ -36,9 +36,20 @@ Get-ChildItem "$ParentDirectory\*IPtoDNSLookup*Build at*" -File | Where-Object C
 Write-Host "Deleted old files in output $ParentDirectory\bin\Release\*IPtoDNSLookup*Build at*"
 
 #Rename file to v. and buildtime
-Write-Host "Renaming output $IPtoDNSLookupPath to format IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format "ddMMyyyy-HHmmss").exe"
-Rename-Item -Path $IPtoDNSLookupPath -NewName ("IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format 'ddMMyyyy-HHmmss').exe") -Force
-Write-Host "Renamed output $IPtoDNSLookupPath to format IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format 'ddMMyyyy-HHmmss').exe"
+#Write-Host "Renaming output $IPtoDNSLookupPath to format IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format "ddMMyyyy-HHmmss").exe"
+#Rename-Item -Path $IPtoDNSLookupPath -NewName ("IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format 'ddMMyyyy-HHmmss').exe") -Force
+#Write-Host "Renamed output $IPtoDNSLookupPath to format IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format 'ddMMyyyy-HHmmss').exe" 
+
+# Copy the original file to a new file with the renamed format
+$originalFilePath = $IPtoDNSLookupPath
+$newFilePath = "IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format 'ddMMyyyy-HHmmss').exe"
+
+#Write-Host "Copying original file to $newFilePath"
+Copy-Item -Path $originalFilePath -Destination $newFilePath -Force
+
+# Rename the copied file
+Write-Host "Renaming copied file to format IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format 'ddMMyyyy-HHmmss').exe"
+Rename-Item -Path $newFilePath -NewName ("IPtoDNSLookup v. $FileVersion - Build at $(Get-Date -format 'ddMMyyyy-HHmmss').exe") -Force
 
 #Show task is done - Get filename for the new file
 $files = Get-ChildItem -Path "$ParentDirectory\bin\Release" -Filter "*IPtoDNSLookup*Build at*"
