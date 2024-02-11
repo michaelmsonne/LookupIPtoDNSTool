@@ -19,6 +19,10 @@ namespace LookupsIPsToDNS
         private DataTable _table = new DataTable();
         private BackgroundWorker _lookupWorker = new BackgroundWorker();
         private CancellationTokenSource _tokenSource = new CancellationTokenSource();
+        // Declare processedIPs as a member variable of the class
+        private readonly HashSet<string> _processedIPs = new HashSet<string>();
+
+        #region MyRegion
 
         public string AssemblyVersion
         {
@@ -93,7 +97,8 @@ namespace LookupsIPsToDNS
         {
             var ips = ipAddressTextBox.Text.Split('\n').Select(ip => ip.Trim()).Where(ip => !string.IsNullOrEmpty(ip));
 
-            var invalidIPs = ips.Where(ip => !IPAddress.TryParse(ip, out _));
+            var enumerable = ips as string[] ?? ips.ToArray();
+            var invalidIPs = enumerable.Where(ip => !IPAddress.TryParse(ip, out _));
 
             var iPs = invalidIPs as string[] ?? invalidIPs.ToArray();
             if (iPs.Any())
@@ -102,11 +107,11 @@ namespace LookupsIPsToDNS
                 var result = MessageBox.Show($@"The following IP addresses are invalid:
 {invalidIpList}
 
-Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
-                    ipAddressTextBox.Lines = ips.Where(ip => IPAddress.TryParse(ip, out _)).ToArray();
+                    ipAddressTextBox.Lines = enumerable.Where(ip => IPAddress.TryParse(ip, out _)).ToArray();
 
                     // all IP addresses are valid
                     toolStripStatusLabel.Text = @"Invalid IP address(es) removed. Please try again.";
@@ -117,6 +122,17 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNoCanc
                     toolStripStatusLabel.Text = @"Invalid IP address(es) found. Please correct the IP address(es) and try again.";
                 }
             }
+            else if (!enumerable.Any(ip => IPAddress.TryParse(ip, out _)))
+            {
+                // No valid IP addresses found
+                MessageBox.Show(@"No valid IP addresses found to lookup. Please enter valid IP addresses and try again.", @"Invalid IP Address to lookup", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                // Set status text in status bar
+                toolStripStatusLabel.Text = @"No valid IP addresses found. Please enter valid IP addresses and try again.";
+
+                // Set focus to the IP address TextBox
+                ipAddressTextBox.Focus();
+            }
             else
             {
                 // all IP addresses are valid
@@ -125,6 +141,9 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNoCanc
                 lookupButton.Enabled = false;
                 cancelButton.Enabled = true;
                 buttonCleanOutput.Enabled = false;
+                cleanupIPListButton.Enabled = false;
+                buttonExporttoCSV.Enabled = false;
+                loadIPsFromcsvFileToolStripMenuItem.Enabled = false;
 
                 if (!_lookupWorker.IsBusy)
                 {
@@ -133,10 +152,7 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNoCanc
                 }
             }
         }
-
-        // Declare processedIPs as a member variable of the class
-        private HashSet<string> _processedIPs = new HashSet<string>();
-
+        
         private void LookupWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             string[] ipAddresses = ipAddressTextBox.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
@@ -389,10 +405,67 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNoCanc
             lookupButton.Enabled = true;
             cancelButton.Enabled = false;
             buttonCleanOutput.Enabled = true;
+            cleanupIPListButton.Enabled = true;
+            buttonExporttoCSV.Enabled = true;
+            loadIPsFromcsvFileToolStripMenuItem.Enabled = true;
 
             // Check if DataGridView has any rows and update Clear button accordingly
             UpdateClearButton();
             UpdateExportButton();
+        }
+
+        private static void AddIpAddressesToTextBox(List<string> ipAddresses, TextBox textBox)
+        {
+            // Add each IP address to the list
+            foreach (string ipAddress in ipAddresses)
+            {
+                textBox.AppendText($"{ipAddress}{Environment.NewLine}");
+            }
+        }
+
+        private List<string> ReadIpAddressesFromCsv(string filePath)
+        {
+            List<string> ipAddresses = new List<string>();
+
+            // Read all lines from the CSV file
+            string[] lines = File.ReadAllLines(filePath);
+
+            // Check if the file has at least one line (header or data)
+            if (lines.Length >= 1)
+            {
+                // Split the header line to get column names
+                string[] headers = lines[0].Split(',');
+
+                // Find the column index for "IP Address"
+                int ipAddressIndex = Array.IndexOf(headers, "IP Address");
+
+                // Iterate over data lines starting from the second line
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    // Split the current line into values
+                    string[] values = lines[i].Split(',');
+
+                    // Ensure the line has enough columns and contains a valid IP address
+                    if (values.Length > ipAddressIndex)
+                    {
+                        string ipAddress = values[ipAddressIndex];
+
+                        // Validate the IP address (you may want to add more robust validation)
+                        if (IPAddress.TryParse(ipAddress, out _))
+                        {
+                            // Add the valid IP address to the list
+                            ipAddresses.Add(ipAddress);
+                        }
+                        else
+                        {
+                            // Handle invalid IP addresses (you may want to display a message or log it)
+                            MessageBox.Show($@"Invalid IP address: {ipAddress}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+
+            return ipAddresses;
         }
 
         private void buttonLookup_Click(object sender, EventArgs e)
@@ -401,35 +474,9 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNoCanc
             DoIpLookupWork();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            resultDataGridView.DataSource = _table;
-            if (_lookupWorker.IsBusy)
-            {
-                _tokenSource.Cancel();
-            }
-        }
-        
-        private void buttonCleanOutput_Click(object sender, EventArgs e)
-        {
-            // Clear the current data source
-            resultDataGridView.DataSource = null;
+        #endregion Main shared code
 
-            // Clear the rows in the DataTable
-            _table.Clear();
-
-            // Re-bind the DataTable to the DataGridView
-            resultDataGridView.DataSource = _table;
-
-            FormatOutputGrid();
-
-            // Set status text in status bar
-            toolStripStatusLabel.Text = @"Ready.";
-
-            // Disable Clear button since there's no data to clear
-            UpdateClearButton();
-            UpdateExportButton();
-        }
+        #region Menu code
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -448,6 +495,70 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNoCanc
             {
                 // Show error message
                 MessageBox.Show(@"Error: " + ex.Message, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
+        }
+
+        private void loadIPsFromcsvFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = @"Select CSV File",
+                Filter = @"CSV Files|*.csv",
+                Multiselect = false
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+
+                // Read the IP addresses from the selected CSV file
+                List<string> ipAddresses = ReadIpAddressesFromCsv(filePath);
+
+                // Clear the current IP addresses in the TextBox
+                ipAddressTextBox.Clear();
+
+                // Add IP addresses to the multiline TextBox
+                AddIpAddressesToTextBox(ipAddresses, ipAddressTextBox);
+            }
+        }
+
+        #endregion Menu code
+
+        #region Form code
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            resultDataGridView.DataSource = _table;
+            if (_lookupWorker.IsBusy)
+            {
+                _tokenSource.Cancel();
+            }
+        }
+        
+        private void buttonCleanOutput_Click(object sender, EventArgs e)
+        {
+            // Ask the user for confirmation before clearing the TextBox
+            DialogResult result = MessageBox.Show(@"Are you sure you want to clear the looked up IP address list?", @"Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                // Clear the current data source
+                resultDataGridView.DataSource = null;
+
+                // Clear the rows in the DataTable
+                _table.Clear();
+
+                // Re-bind the DataTable to the DataGridView
+                resultDataGridView.DataSource = _table;
+
+                FormatOutputGrid();
+
+                // Set status text in status bar
+                toolStripStatusLabel.Text = @"Ready.";
+
+                // Disable Clear button since there's no data to clear
+                UpdateClearButton();
+                UpdateExportButton();
             }
         }
 
@@ -490,5 +601,26 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNoCanc
                 throw;
             }
         }
+
+        private void cleanupIPListButton_Click(object sender, EventArgs e)
+        {
+            // Ask the user for confirmation before clearing the TextBox
+            DialogResult result = MessageBox.Show(@"Are you sure you want to clear the IP address list?", @"Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                // Remove empty lines and duplicates from the IP address list
+                ipAddressTextBox.Text = null;
+
+                // Set status text in the status bar
+                toolStripStatusLabel.Text = @"Ready.";
+
+                // Disable the Clear button since there's no data to clear
+                UpdateClearButton();
+                UpdateExportButton();
+            }
+        }
+
+        #endregion Form code
     }
 }
