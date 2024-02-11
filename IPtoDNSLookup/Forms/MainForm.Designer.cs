@@ -45,6 +45,7 @@
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadIPsFromcsvFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonGetCurrentConnectedIPs = new System.Windows.Forms.Button();
             this.groupBoxIPs.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultDataGridView)).BeginInit();
@@ -58,11 +59,12 @@
             this.ipAddressTextBox.Multiline = true;
             this.ipAddressTextBox.Name = "ipAddressTextBox";
             this.ipAddressTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ipAddressTextBox.Size = new System.Drawing.Size(183, 676);
+            this.ipAddressTextBox.Size = new System.Drawing.Size(183, 647);
             this.ipAddressTextBox.TabIndex = 0;
             // 
             // groupBoxIPs
             // 
+            this.groupBoxIPs.Controls.Add(this.buttonGetCurrentConnectedIPs);
             this.groupBoxIPs.Controls.Add(this.cleanupIPListButton);
             this.groupBoxIPs.Controls.Add(this.cancelButton);
             this.groupBoxIPs.Controls.Add(this.ipAddressTextBox);
@@ -201,6 +203,16 @@
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // buttonGetCurrentConnectedIPs
+            // 
+            this.buttonGetCurrentConnectedIPs.Location = new System.Drawing.Point(6, 672);
+            this.buttonGetCurrentConnectedIPs.Name = "buttonGetCurrentConnectedIPs";
+            this.buttonGetCurrentConnectedIPs.Size = new System.Drawing.Size(183, 23);
+            this.buttonGetCurrentConnectedIPs.TabIndex = 5;
+            this.buttonGetCurrentConnectedIPs.Text = "Get current host connects IPs";
+            this.buttonGetCurrentConnectedIPs.UseVisualStyleBackColor = true;
+            this.buttonGetCurrentConnectedIPs.Click += new System.EventHandler(this.buttonGetCurrentConnectedIPs_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,6 +262,7 @@
         private System.Windows.Forms.Button buttonExporttoCSV;
         private System.Windows.Forms.ToolStripMenuItem loadIPsFromcsvFileToolStripMenuItem;
         private System.Windows.Forms.Button cleanupIPListButton;
+        private System.Windows.Forms.Button buttonGetCurrentConnectedIPs;
     }
 }
 

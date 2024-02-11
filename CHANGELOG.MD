@@ -6,6 +6,7 @@
 - Add option to delete incorrect IP addresses from the list of IP addresses to lookup
 - Add option to import a list of IP addresses to lookup from a .csv file
 - Add more handling to the GUI for tasks that running in the background and the user interaction with the tool
+- Add function to get the local host connected IP addresses to input in the tool for lookup
 
 ### Changed
 - A new layout to the tool
