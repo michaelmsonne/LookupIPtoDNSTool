@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ipAddressTextBox = new System.Windows.Forms.TextBox();
             this.groupBoxIPs = new System.Windows.Forms.GroupBox();
+            this.cleanupIPListButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.lookupButton = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -42,6 +43,7 @@
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadIPsFromcsvFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBoxIPs.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -61,6 +63,7 @@
             // 
             // groupBoxIPs
             // 
+            this.groupBoxIPs.Controls.Add(this.cleanupIPListButton);
             this.groupBoxIPs.Controls.Add(this.cancelButton);
             this.groupBoxIPs.Controls.Add(this.ipAddressTextBox);
             this.groupBoxIPs.Controls.Add(this.lookupButton);
@@ -70,6 +73,16 @@
             this.groupBoxIPs.TabIndex = 1;
             this.groupBoxIPs.TabStop = false;
             this.groupBoxIPs.Text = "IP´s to get information about";
+            // 
+            // cleanupIPListButton
+            // 
+            this.cleanupIPListButton.Location = new System.Drawing.Point(126, 701);
+            this.cleanupIPListButton.Name = "cleanupIPListButton";
+            this.cleanupIPListButton.Size = new System.Drawing.Size(63, 23);
+            this.cleanupIPListButton.TabIndex = 4;
+            this.cleanupIPListButton.Text = "Clean IPs";
+            this.cleanupIPListButton.UseVisualStyleBackColor = true;
+            this.cleanupIPListButton.Click += new System.EventHandler(this.cleanupIPListButton_Click);
             // 
             // cancelButton
             // 
@@ -86,7 +99,7 @@
             // 
             this.lookupButton.Location = new System.Drawing.Point(6, 701);
             this.lookupButton.Name = "lookupButton";
-            this.lookupButton.Size = new System.Drawing.Size(183, 23);
+            this.lookupButton.Size = new System.Drawing.Size(117, 23);
             this.lookupButton.TabIndex = 2;
             this.lookupButton.Text = "Lookup IP´s in the list";
             this.lookupButton.UseVisualStyleBackColor = true;
@@ -142,6 +155,7 @@
             this.statusStrip.Location = new System.Drawing.Point(0, 794);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(800, 22);
+            this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 4;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -165,16 +179,25 @@
             // menuToolStripMenuItem
             // 
             this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadIPsFromcsvFileToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.menuToolStripMenuItem.Text = "Menu";
             // 
+            // loadIPsFromcsvFileToolStripMenuItem
+            // 
+            this.loadIPsFromcsvFileToolStripMenuItem.BackColor = System.Drawing.Color.White;
+            this.loadIPsFromcsvFileToolStripMenuItem.Name = "loadIPsFromcsvFileToolStripMenuItem";
+            this.loadIPsFromcsvFileToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.loadIPsFromcsvFileToolStripMenuItem.Text = "Load IPs from .csv file";
+            this.loadIPsFromcsvFileToolStripMenuItem.Click += new System.EventHandler(this.loadIPsFromcsvFileToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -225,6 +248,8 @@
         private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Button buttonExporttoCSV;
+        private System.Windows.Forms.ToolStripMenuItem loadIPsFromcsvFileToolStripMenuItem;
+        private System.Windows.Forms.Button cleanupIPListButton;
     }
 }
 

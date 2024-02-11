@@ -1,18 +1,41 @@
 ## [1.0.0.3] - xx-xx-xxxx
 
 ### Add
-- 
+- Add cleanup of the looked up IP addresses in the tool
+- Add IPv6 support to the tool for the list of IP addresses there is looked up
+- Add option to delete incorrect IP addresses from the list of IP addresses to lookup
+- Add option to import a list of IP addresses to lookup from a .csv file
+- Add more handling to the GUI for tasks that running in the background and the user interaction with the tool
 
 ### Changed
-- 
+- A new layout to the tool
+- Some small changes to the GUI
 
 ### Fixed
-- 
+- Some better error handling and messages in the tool
 
-## [1.0.0.2] - xx-xx-xxxx
+## [1.0.0.2] - 22-06-2023
 
-## [1.0.0.1] - xx-xx-xxxx
+### Add
+- Add .csv export option to the tool for the list of IP addresses there is looked up
 
-## [1.0.0.0] - xx-xx-xxxx
+### Changed
+- Order of the functions in the tool and how the tool is used asynchronosly
+
+### Fixed
+- Some better error handling and messages in the tool
+
+## [1.0.0.1] - 18-05-2023
+
+### Add
+- New icon for the tool
+
+### Changed
+- New method to get lookup values from the list of IP addresses
+
+### Fixed
+- Typos in the code
+
+## [1.0.0.0] - 02-05-2023
 
 Initial release of the tool
