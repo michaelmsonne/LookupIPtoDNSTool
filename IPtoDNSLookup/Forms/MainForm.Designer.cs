@@ -1,4 +1,4 @@
-﻿namespace LookupsIPsToDNS
+﻿namespace LookupsIPsToDNS.Forms
 {
     partial class MainForm
     {
@@ -120,7 +120,7 @@
             // buttonExporttoCSV
             // 
             this.buttonExporttoCSV.Enabled = false;
-            this.buttonExporttoCSV.Location = new System.Drawing.Point(428, 728);
+            this.buttonExporttoCSV.Location = new System.Drawing.Point(428, 729);
             this.buttonExporttoCSV.Name = "buttonExporttoCSV";
             this.buttonExporttoCSV.Size = new System.Drawing.Size(141, 23);
             this.buttonExporttoCSV.TabIndex = 2;
@@ -131,7 +131,7 @@
             // buttonCleanOutput
             // 
             this.buttonCleanOutput.Enabled = false;
-            this.buttonCleanOutput.Location = new System.Drawing.Point(7, 727);
+            this.buttonCleanOutput.Location = new System.Drawing.Point(6, 729);
             this.buttonCleanOutput.Name = "buttonCleanOutput";
             this.buttonCleanOutput.Size = new System.Drawing.Size(75, 23);
             this.buttonCleanOutput.TabIndex = 1;
