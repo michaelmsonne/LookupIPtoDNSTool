@@ -5,6 +5,7 @@
 
 ### Changed
 - Some small typos in the GUI
+- Changed some of the font in the GUI
 
 ### Fixed
 - 
