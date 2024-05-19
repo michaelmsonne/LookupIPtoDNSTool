@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ipAddressTextBox = new System.Windows.Forms.TextBox();
             this.groupBoxIPs = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblValidIPCount = new System.Windows.Forms.Label();
             this.cleanupIPListButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.lookupButton = new System.Windows.Forms.Button();
@@ -46,8 +48,6 @@
             this.loadIPsFromcsvFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonGetCurrentConnectedIPs = new System.Windows.Forms.Button();
-            this.lblValidIPCount = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBoxFormActions = new System.Windows.Forms.GroupBox();
             this.groupBoxIPs.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -78,6 +78,24 @@
             this.groupBoxIPs.TabIndex = 1;
             this.groupBoxIPs.TabStop = false;
             this.groupBoxIPs.Text = "IP´s to get information about";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 631);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(80, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Valid IP´s in list:";
+            // 
+            // lblValidIPCount
+            // 
+            this.lblValidIPCount.AutoSize = true;
+            this.lblValidIPCount.Location = new System.Drawing.Point(81, 631);
+            this.lblValidIPCount.Name = "lblValidIPCount";
+            this.lblValidIPCount.Size = new System.Drawing.Size(13, 13);
+            this.lblValidIPCount.TabIndex = 6;
+            this.lblValidIPCount.Text = "0";
             // 
             // cleanupIPListButton
             // 
@@ -213,27 +231,9 @@
             this.buttonGetCurrentConnectedIPs.Name = "buttonGetCurrentConnectedIPs";
             this.buttonGetCurrentConnectedIPs.Size = new System.Drawing.Size(183, 23);
             this.buttonGetCurrentConnectedIPs.TabIndex = 5;
-            this.buttonGetCurrentConnectedIPs.Text = "Get current host connects IPs";
+            this.buttonGetCurrentConnectedIPs.Text = "Get current host connected IPs";
             this.buttonGetCurrentConnectedIPs.UseVisualStyleBackColor = true;
             this.buttonGetCurrentConnectedIPs.Click += new System.EventHandler(this.buttonGetCurrentConnectedIPs_Click);
-            // 
-            // lblValidIPCount
-            // 
-            this.lblValidIPCount.AutoSize = true;
-            this.lblValidIPCount.Location = new System.Drawing.Point(81, 631);
-            this.lblValidIPCount.Name = "lblValidIPCount";
-            this.lblValidIPCount.Size = new System.Drawing.Size(13, 13);
-            this.lblValidIPCount.TabIndex = 6;
-            this.lblValidIPCount.Text = "0";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 631);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Valid IP´s in list:";
             // 
             // groupBoxFormActions
             // 

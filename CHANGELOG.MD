@@ -1,3 +1,14 @@
+## [1.0.0.4] - xx-xx-xxxx (DEV)
+
+### Add
+- 
+
+### Changed
+- Some small typos in the GUI
+
+### Fixed
+- 
+ 
 ## [1.0.0.3] - 19-05-2024
 
 ### Add
