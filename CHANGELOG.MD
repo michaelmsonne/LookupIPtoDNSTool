@@ -1,4 +1,4 @@
-## [1.0.0.3] - xx-xx-xxxx
+## [1.0.0.3] - 19-05-2024
 
 ### Add
 - Add cleanup of the looked up IP addresses in the tool
