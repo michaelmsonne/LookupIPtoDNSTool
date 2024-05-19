@@ -376,8 +376,8 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
                 if (!string.IsNullOrEmpty(trimmedLine) && IPAddress.TryParse(trimmedLine, out IPAddress ipAddress))
                 {
                     // Check the number of octets (IPv4) or the presence of colons (IPv6)
-                    if ((ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork && trimmedLine.Split('.').Length == 4) ||
-                        (ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6 && trimmedLine.Contains(':')))
+                    if ((ipAddress.AddressFamily == AddressFamily.InterNetwork && trimmedLine.Split('.').Length == 4) ||
+                        (ipAddress.AddressFamily == AddressFamily.InterNetworkV6 && trimmedLine.Contains(':')))
                     {
                         validIPCount++;
                     }
