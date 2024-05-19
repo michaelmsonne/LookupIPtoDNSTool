@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ipAddressTextBox = new System.Windows.Forms.TextBox();
             this.groupBoxIPs = new System.Windows.Forms.GroupBox();
@@ -59,6 +62,7 @@
             // 
             // ipAddressTextBox
             // 
+            this.ipAddressTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ipAddressTextBox.Location = new System.Drawing.Point(6, 19);
             this.ipAddressTextBox.Multiline = true;
             this.ipAddressTextBox.Name = "ipAddressTextBox";
@@ -72,6 +76,7 @@
             this.groupBoxIPs.Controls.Add(this.label1);
             this.groupBoxIPs.Controls.Add(this.lblValidIPCount);
             this.groupBoxIPs.Controls.Add(this.ipAddressTextBox);
+            this.groupBoxIPs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxIPs.Location = new System.Drawing.Point(12, 32);
             this.groupBoxIPs.Name = "groupBoxIPs";
             this.groupBoxIPs.Size = new System.Drawing.Size(195, 649);
@@ -82,6 +87,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(3, 631);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 13);
@@ -93,15 +99,16 @@
             this.lblValidIPCount.AutoSize = true;
             this.lblValidIPCount.Location = new System.Drawing.Point(81, 631);
             this.lblValidIPCount.Name = "lblValidIPCount";
-            this.lblValidIPCount.Size = new System.Drawing.Size(13, 13);
+            this.lblValidIPCount.Size = new System.Drawing.Size(14, 13);
             this.lblValidIPCount.TabIndex = 6;
             this.lblValidIPCount.Text = "0";
             // 
             // cleanupIPListButton
             // 
-            this.cleanupIPListButton.Location = new System.Drawing.Point(126, 45);
+            this.cleanupIPListButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cleanupIPListButton.Location = new System.Drawing.Point(129, 45);
             this.cleanupIPListButton.Name = "cleanupIPListButton";
-            this.cleanupIPListButton.Size = new System.Drawing.Size(63, 23);
+            this.cleanupIPListButton.Size = new System.Drawing.Size(60, 23);
             this.cleanupIPListButton.TabIndex = 4;
             this.cleanupIPListButton.Text = "Clean IPs";
             this.cleanupIPListButton.UseVisualStyleBackColor = true;
@@ -110,6 +117,7 @@
             // cancelButton
             // 
             this.cancelButton.Enabled = false;
+            this.cancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cancelButton.Location = new System.Drawing.Point(6, 74);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(183, 23);
@@ -120,11 +128,12 @@
             // 
             // lookupButton
             // 
+            this.lookupButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lookupButton.Location = new System.Drawing.Point(6, 45);
             this.lookupButton.Name = "lookupButton";
             this.lookupButton.Size = new System.Drawing.Size(117, 23);
             this.lookupButton.TabIndex = 2;
-            this.lookupButton.Text = "Lookup IP´s in the list";
+            this.lookupButton.Text = "Lookup IP´s in list";
             this.lookupButton.UseVisualStyleBackColor = true;
             this.lookupButton.Click += new System.EventHandler(this.buttonLookup_Click);
             // 
@@ -133,6 +142,7 @@
             this.groupBox1.Controls.Add(this.buttonExporttoCSV);
             this.groupBox1.Controls.Add(this.buttonCleanOutput);
             this.groupBox1.Controls.Add(this.resultDataGridView);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(213, 32);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(575, 759);
@@ -143,6 +153,7 @@
             // buttonExporttoCSV
             // 
             this.buttonExporttoCSV.Enabled = false;
+            this.buttonExporttoCSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonExporttoCSV.Location = new System.Drawing.Point(428, 729);
             this.buttonExporttoCSV.Name = "buttonExporttoCSV";
             this.buttonExporttoCSV.Size = new System.Drawing.Size(141, 23);
@@ -154,6 +165,7 @@
             // buttonCleanOutput
             // 
             this.buttonCleanOutput.Enabled = false;
+            this.buttonCleanOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonCleanOutput.Location = new System.Drawing.Point(6, 729);
             this.buttonCleanOutput.Name = "buttonCleanOutput";
             this.buttonCleanOutput.Size = new System.Drawing.Size(75, 23);
@@ -164,10 +176,34 @@
             // 
             // resultDataGridView
             // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.resultDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.resultDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.resultDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.resultDataGridView.Location = new System.Drawing.Point(7, 18);
             this.resultDataGridView.Name = "resultDataGridView";
             this.resultDataGridView.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.resultDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.resultDataGridView.Size = new System.Drawing.Size(562, 704);
             this.resultDataGridView.TabIndex = 0;
             // 
@@ -227,6 +263,7 @@
             // 
             // buttonGetCurrentConnectedIPs
             // 
+            this.buttonGetCurrentConnectedIPs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonGetCurrentConnectedIPs.Location = new System.Drawing.Point(6, 16);
             this.buttonGetCurrentConnectedIPs.Name = "buttonGetCurrentConnectedIPs";
             this.buttonGetCurrentConnectedIPs.Size = new System.Drawing.Size(183, 23);
@@ -241,6 +278,7 @@
             this.groupBoxFormActions.Controls.Add(this.cleanupIPListButton);
             this.groupBoxFormActions.Controls.Add(this.lookupButton);
             this.groupBoxFormActions.Controls.Add(this.cancelButton);
+            this.groupBoxFormActions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxFormActions.Location = new System.Drawing.Point(12, 687);
             this.groupBoxFormActions.Name = "groupBoxFormActions";
             this.groupBoxFormActions.Size = new System.Drawing.Size(195, 104);
