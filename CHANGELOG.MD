@@ -1,7 +1,7 @@
 ## [1.0.0.4] - xx-xx-xxxx (DEV)
 
 ### Add
-- 
+- Add option to save the list of IP´s from the lookup list to a .csv file
 
 ### Changed
 - Some small typos in the GUI

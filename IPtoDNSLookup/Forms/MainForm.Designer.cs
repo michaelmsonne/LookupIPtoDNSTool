@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ipAddressTextBox = new System.Windows.Forms.TextBox();
             this.groupBoxIPs = new System.Windows.Forms.GroupBox();
@@ -52,6 +49,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonGetCurrentConnectedIPs = new System.Windows.Forms.Button();
             this.groupBoxFormActions = new System.Windows.Forms.GroupBox();
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBoxIPs.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultDataGridView)).BeginInit();
@@ -176,34 +174,10 @@
             // 
             // resultDataGridView
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.resultDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.resultDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.resultDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             this.resultDataGridView.Location = new System.Drawing.Point(7, 18);
             this.resultDataGridView.Name = "resultDataGridView";
             this.resultDataGridView.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.resultDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.resultDataGridView.Size = new System.Drawing.Size(562, 704);
             this.resultDataGridView.TabIndex = 0;
             // 
@@ -240,6 +214,7 @@
             // 
             this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadIPsFromcsvFileToolStripMenuItem,
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
@@ -249,15 +224,15 @@
             // 
             this.loadIPsFromcsvFileToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.loadIPsFromcsvFileToolStripMenuItem.Name = "loadIPsFromcsvFileToolStripMenuItem";
-            this.loadIPsFromcsvFileToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.loadIPsFromcsvFileToolStripMenuItem.Text = "Load IPs from .csv file";
+            this.loadIPsFromcsvFileToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.loadIPsFromcsvFileToolStripMenuItem.Text = "Load IPs from .csv file to lookup";
             this.loadIPsFromcsvFileToolStripMenuItem.Click += new System.EventHandler(this.loadIPsFromcsvFileToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.BackColor = System.Drawing.Color.White;
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -285,6 +260,14 @@
             this.groupBoxFormActions.TabIndex = 6;
             this.groupBoxFormActions.TabStop = false;
             this.groupBoxFormActions.Text = "Actions";
+            // 
+            // saveIPsTocsvFileFromIPListToolStripMenuItem
+            // 
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem.BackColor = System.Drawing.Color.White;
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Name = "saveIPsTocsvFileFromIPListToolStripMenuItem";
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Text = "Save IP´s to .csv file from IP list";
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Click += new System.EventHandler(this.saveIPsTocsvFileFromIPListToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -341,6 +324,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblValidIPCount;
         private System.Windows.Forms.GroupBox groupBoxFormActions;
+        private System.Windows.Forms.ToolStripMenuItem saveIPsTocsvFileFromIPListToolStripMenuItem;
     }
 }
 

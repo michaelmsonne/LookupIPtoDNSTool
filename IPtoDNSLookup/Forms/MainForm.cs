@@ -121,7 +121,7 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
             else if (!enumerable.Any(ip => IPAddress.TryParse(ip, out _)))
             {
                 // No valid IP addresses found
-                MessageBox.Show(@"No valid IP addresses found to lookup. Please enter valid IP addresses and try again.", @"Invalid IP Address to lookup", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(@"No valid IP addresses found to lookup. Please enter at least a valid IP addresses and try again.", @"Invalid IP Address to lookup", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 // Set status text in status bar
                 toolStripStatusLabel.Text = @"No valid IP addresses found. Please enter valid IP addresses and try again.";
@@ -387,6 +387,39 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
             return validIPCount;
         }
 
+        private void SaveIpsToLookupToCsv(string filePath)
+        {
+            try
+            {
+                // Read IPs from the TextBox, one per line
+                var ips = ipAddressTextBox.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+                // Write the IPs to the CSV file
+                using (var writer = new StreamWriter(filePath))
+                {
+                    // Write the header
+                    writer.WriteLine("IP Address");
+
+                    foreach (var ip in ips)
+                    {
+                        if (!string.IsNullOrWhiteSpace(ip)) // Ignore empty lines
+                        {
+                            writer.WriteLine(ip);
+                        }
+                    }
+                }
+
+                // Show success
+                MessageBox.Show($@"Data exported to {filePath}", @"Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                // Show error
+                MessageBox.Show($@"Data not exported to {filePath}" + Environment.NewLine + Environment.NewLine + @"Error: " + ex.Message, @"Export error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                throw;
+            }
+        }
+
         #endregion Main shared code
 
         #region Menu code
@@ -567,6 +600,24 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
             catch (Exception ex)
             {
                 MessageBox.Show($@"Error counting valid IP addresses: {ex.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void saveIPsTocsvFileFromIPListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Open a SaveFileDialog to ask the user where to save the file
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = @"CSV files (*.csv)|*.csv";
+                saveFileDialog.Title = @"Save IPs to CSV";
+                saveFileDialog.DefaultExt = "csv";
+                saveFileDialog.AddExtension = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName;
+                    SaveIpsToLookupToCsv(filePath);
+                }
             }
         }
     }
