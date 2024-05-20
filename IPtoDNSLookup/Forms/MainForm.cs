@@ -194,13 +194,12 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
                         if (string.IsNullOrEmpty(dnsServer))
                         {
                             // Use default DNS server
-                            hostEntry = Dns.GetHostEntry(IPAddress.Parse(ipAddress));
+                            hostEntry = Dns.GetHostEntry(ipAddress);
                         }
                         else
                         {
                             // Use specified DNS server
-                            var dnsClient = new DnsClient(dnsServer);
-                            hostEntry = dnsClient.GetHostEntry(ipAddress);
+                            hostEntry = GetHostEntry(ipAddress, dnsServer);
                         }*/
 
                         DataRow row = _table.NewRow();
@@ -634,5 +633,97 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
                 }
             }
         }
+
+        #region Custom DNS
+
+        private IPHostEntry GetHostEntry(string ipAddress, string dnsServer)
+        {
+            byte[] query = BuildQuery(ipAddress);
+
+            using (var udpClient = new UdpClient())
+            {
+                udpClient.Connect(dnsServer, 53);
+                udpClient.Send(query, query.Length);
+
+                IPEndPoint remoteEndPoint = null;
+                byte[] serverResponse = udpClient.Receive(ref remoteEndPoint);
+
+                return ParseResponse(serverResponse);
+            }
+        }
+
+        private byte[] BuildQuery(string ipAddress)
+        {
+            // Determine query type (A for IPv4, AAAA for IPv6)
+            bool isIPv6 = IPAddress.Parse(ipAddress).AddressFamily == AddressFamily.InterNetworkV6;
+            ushort queryType = isIPv6 ? (ushort)0x1c : (ushort)0x01;
+
+            var query = new byte[32];
+            query[0] = 1; // transaction ID
+            query[1] = 0; // transaction ID
+            query[2] = 1; // standard query
+            query[3] = 0; // standard query
+            query[4] = 0; // questions
+            query[5] = 1; // questions
+            query[6] = 0; // answers
+            query[7] = 0; // answers
+            query[8] = 0; // authoritative
+            query[9] = 0; // authoritative
+            query[10] = 0; // additional
+            query[11] = 0; // additional
+
+            string[] ipAddressParts = ipAddress.Split('.');
+            int pos = 12;
+            foreach (string part in ipAddressParts)
+            {
+                byte length = (byte)part.Length;
+                query[pos++] = length;
+                foreach (char c in part)
+                {
+                    query[pos++] = (byte)c;
+                }
+            }
+
+            query[pos++] = 0; // end of string
+            query[pos++] = (byte)(queryType >> 8); // type high byte
+            query[pos++] = (byte)(queryType & 0xff); // type low byte
+            query[pos++] = 0; // class IN high byte
+            query[pos++] = 1; // class IN low byte
+
+            return query;
+        }
+
+        private IPHostEntry ParseResponse(byte[] response)
+        {
+            int qNameEnd = 12;
+            while (response[qNameEnd] != 0) qNameEnd++;
+
+            int answerIndex = qNameEnd + 5;
+
+            int dataLength = (response[answerIndex + 9] << 8) | response[answerIndex + 10];
+            int dataOffset = answerIndex + 11;
+
+            string hostName = "";
+            for (int i = dataOffset; i < dataOffset + dataLength; i++)
+            {
+                if (response[i] == 0) break;
+                if (response[i] < 32)
+                {
+                    hostName += ".";
+                }
+                else
+                {
+                    hostName += (char)response[i];
+                }
+            }
+
+            return new IPHostEntry
+            {
+                HostName = hostName,
+                AddressList = new[] { IPAddress.Parse(hostName) }
+            };
+        }
+
+        #endregion Custom DNS
     }
 }
