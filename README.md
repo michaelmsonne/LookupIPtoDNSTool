@@ -36,8 +36,8 @@ Outline the file contents of the repository. It helps users navigate the codebas
 | `CHANGELOG.md`    | List of changes to the sample.              |
 | `CONTRIBUTING.md` | Guidelines for contributing to the TEMPLATE.|
 | `README.md`       | This README file.                           |
-| `SECURITY.md`     | This README file.                           |
-| `LICENSE`         | The license for the TEMPLATE.               |
+| `SECURITY.md`     | Security file.                              |
+| `LICENSE`         | The license for the project .               |
 
 ## Introduction
 The Lookup IP to DNS Tool is a C# utility designed to resolve IP addresses to their corresponding DNS hostnames asynchronously.
