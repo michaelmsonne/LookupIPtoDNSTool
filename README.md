@@ -114,5 +114,35 @@ You can either clone this repository and build the project yourself.
 # Contributing
 If you want to contribute to this project, please open an issue or submit a pull request. I welcome contributions :)
 
+See [CONTRIBUTING](CONTRIBUTING.md) for more information.
+
+First off, thanks for taking the time to contribute! Contributions are what makes the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will benefit everybody else and are **greatly appreciated**.
+Feel free to send pull requests or fill out issues when you encounter them. I'm also completely open to adding direct maintainers/contributors and working together! :)
+
+Please try to create bug reports that are:
+
+- _Reproducible._ Include steps to reproduce the problem.
+- _Specific._ Include as much detail as possible: which version, what environment, etc.
+- _Unique._ Do not duplicate existing opened issues.
+- _Scoped to a Single Bug._ One bug per report.
+
+# Support
+
+Reach out to the maintainer at one of the following places:
+
+- [GitHub discussions](https://github.com/michaelmsonne/LookupIPtoDNSTool/discussions)
+- The email which is located [in GitHub profile](https://github.com/michaelmsonne)
+
 # License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the **MIT License** - see the LICENSE file for details.
+
+See [LICENSE](LICENSE.md) for more information.
+
+# Sponsors
+## Advanced Installer
+The installer is created from a Free Advanced Installer License for Open-Source from <a href="https://www.advancedinstaller.com/" target="_blank">https://www.advancedinstaller.com/</a> - check it out!
+
+[<img src="https://cdn.advancedinstaller.com/svg/pressinfo/AiLogoColor.svg" title="Advanced Installer" alt="Advanced Instzaller" height="120"/>](https://www.advancedinstaller.com/)
+
+## SAST Tools
+[PVS-Studio](https://pvs-studio.com/en/pvs-studio/?utm_source=github&utm_medium=organic&utm_campaign=open_source) - static analyzer for C, C++, C#, and Java code.
