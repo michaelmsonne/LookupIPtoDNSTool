@@ -50,6 +50,8 @@
             this.buttonGetCurrentConnectedIPs = new System.Windows.Forms.Button();
             this.groupBoxFormActions = new System.Windows.Forms.GroupBox();
             this.saveIPsTocsvFileFromIPListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtDnsServer = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBoxIPs.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultDataGridView)).BeginInit();
@@ -65,7 +67,7 @@
             this.ipAddressTextBox.Multiline = true;
             this.ipAddressTextBox.Name = "ipAddressTextBox";
             this.ipAddressTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ipAddressTextBox.Size = new System.Drawing.Size(183, 609);
+            this.ipAddressTextBox.Size = new System.Drawing.Size(198, 609);
             this.ipAddressTextBox.TabIndex = 0;
             this.ipAddressTextBox.TextChanged += new System.EventHandler(this.ipAddressTextBox_TextChanged);
             // 
@@ -77,7 +79,7 @@
             this.groupBoxIPs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxIPs.Location = new System.Drawing.Point(12, 32);
             this.groupBoxIPs.Name = "groupBoxIPs";
-            this.groupBoxIPs.Size = new System.Drawing.Size(195, 649);
+            this.groupBoxIPs.Size = new System.Drawing.Size(212, 649);
             this.groupBoxIPs.TabIndex = 1;
             this.groupBoxIPs.TabStop = false;
             this.groupBoxIPs.Text = "IP´s to get information about";
@@ -104,11 +106,11 @@
             // cleanupIPListButton
             // 
             this.cleanupIPListButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cleanupIPListButton.Location = new System.Drawing.Point(129, 45);
+            this.cleanupIPListButton.Location = new System.Drawing.Point(6, 129);
             this.cleanupIPListButton.Name = "cleanupIPListButton";
-            this.cleanupIPListButton.Size = new System.Drawing.Size(60, 23);
+            this.cleanupIPListButton.Size = new System.Drawing.Size(117, 23);
             this.cleanupIPListButton.TabIndex = 4;
-            this.cleanupIPListButton.Text = "Clean IPs";
+            this.cleanupIPListButton.Text = "Clean IP list to lookup";
             this.cleanupIPListButton.UseVisualStyleBackColor = true;
             this.cleanupIPListButton.Click += new System.EventHandler(this.cleanupIPListButton_Click);
             // 
@@ -116,9 +118,9 @@
             // 
             this.cancelButton.Enabled = false;
             this.cancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cancelButton.Location = new System.Drawing.Point(6, 74);
+            this.cancelButton.Location = new System.Drawing.Point(6, 100);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(183, 23);
+            this.cancelButton.Size = new System.Drawing.Size(198, 23);
             this.cancelButton.TabIndex = 3;
             this.cancelButton.Text = "Cancel lookup of the IP list";
             this.cancelButton.UseVisualStyleBackColor = true;
@@ -127,9 +129,9 @@
             // lookupButton
             // 
             this.lookupButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lookupButton.Location = new System.Drawing.Point(6, 45);
+            this.lookupButton.Location = new System.Drawing.Point(6, 71);
             this.lookupButton.Name = "lookupButton";
-            this.lookupButton.Size = new System.Drawing.Size(117, 23);
+            this.lookupButton.Size = new System.Drawing.Size(198, 23);
             this.lookupButton.TabIndex = 2;
             this.lookupButton.Text = "Lookup IP´s in list";
             this.lookupButton.UseVisualStyleBackColor = true;
@@ -138,12 +140,11 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.buttonExporttoCSV);
-            this.groupBox1.Controls.Add(this.buttonCleanOutput);
             this.groupBox1.Controls.Add(this.resultDataGridView);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(213, 32);
+            this.groupBox1.Location = new System.Drawing.Point(230, 32);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(575, 759);
+            this.groupBox1.Size = new System.Drawing.Size(558, 759);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Lookedup information from IP list";
@@ -152,7 +153,7 @@
             // 
             this.buttonExporttoCSV.Enabled = false;
             this.buttonExporttoCSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonExporttoCSV.Location = new System.Drawing.Point(428, 729);
+            this.buttonExporttoCSV.Location = new System.Drawing.Point(411, 728);
             this.buttonExporttoCSV.Name = "buttonExporttoCSV";
             this.buttonExporttoCSV.Size = new System.Drawing.Size(141, 23);
             this.buttonExporttoCSV.TabIndex = 2;
@@ -164,7 +165,7 @@
             // 
             this.buttonCleanOutput.Enabled = false;
             this.buttonCleanOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonCleanOutput.Location = new System.Drawing.Point(6, 729);
+            this.buttonCleanOutput.Location = new System.Drawing.Point(129, 129);
             this.buttonCleanOutput.Name = "buttonCleanOutput";
             this.buttonCleanOutput.Size = new System.Drawing.Size(75, 23);
             this.buttonCleanOutput.TabIndex = 1;
@@ -178,7 +179,7 @@
             this.resultDataGridView.Location = new System.Drawing.Point(7, 18);
             this.resultDataGridView.Name = "resultDataGridView";
             this.resultDataGridView.ReadOnly = true;
-            this.resultDataGridView.Size = new System.Drawing.Size(562, 704);
+            this.resultDataGridView.Size = new System.Drawing.Size(545, 704);
             this.resultDataGridView.TabIndex = 0;
             // 
             // statusStrip
@@ -186,7 +187,7 @@
             this.statusStrip.BackColor = System.Drawing.Color.White;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 794);
+            this.statusStrip.Location = new System.Drawing.Point(0, 850);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(800, 22);
             this.statusStrip.SizingGrip = false;
@@ -241,7 +242,7 @@
             this.buttonGetCurrentConnectedIPs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonGetCurrentConnectedIPs.Location = new System.Drawing.Point(6, 16);
             this.buttonGetCurrentConnectedIPs.Name = "buttonGetCurrentConnectedIPs";
-            this.buttonGetCurrentConnectedIPs.Size = new System.Drawing.Size(183, 23);
+            this.buttonGetCurrentConnectedIPs.Size = new System.Drawing.Size(198, 23);
             this.buttonGetCurrentConnectedIPs.TabIndex = 5;
             this.buttonGetCurrentConnectedIPs.Text = "Get current host connected IPs";
             this.buttonGetCurrentConnectedIPs.UseVisualStyleBackColor = true;
@@ -249,6 +250,9 @@
             // 
             // groupBoxFormActions
             // 
+            this.groupBoxFormActions.Controls.Add(this.label2);
+            this.groupBoxFormActions.Controls.Add(this.buttonCleanOutput);
+            this.groupBoxFormActions.Controls.Add(this.txtDnsServer);
             this.groupBoxFormActions.Controls.Add(this.buttonGetCurrentConnectedIPs);
             this.groupBoxFormActions.Controls.Add(this.cleanupIPListButton);
             this.groupBoxFormActions.Controls.Add(this.lookupButton);
@@ -256,7 +260,7 @@
             this.groupBoxFormActions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxFormActions.Location = new System.Drawing.Point(12, 687);
             this.groupBoxFormActions.Name = "groupBoxFormActions";
-            this.groupBoxFormActions.Size = new System.Drawing.Size(195, 104);
+            this.groupBoxFormActions.Size = new System.Drawing.Size(212, 160);
             this.groupBoxFormActions.TabIndex = 6;
             this.groupBoxFormActions.TabStop = false;
             this.groupBoxFormActions.Text = "Actions";
@@ -269,12 +273,29 @@
             this.saveIPsTocsvFileFromIPListToolStripMenuItem.Text = "Save IP´s to .csv file from IP list";
             this.saveIPsTocsvFileFromIPListToolStripMenuItem.Click += new System.EventHandler(this.saveIPsTocsvFileFromIPListToolStripMenuItem_Click);
             // 
+            // txtDnsServer
+            // 
+            this.txtDnsServer.Location = new System.Drawing.Point(112, 45);
+            this.txtDnsServer.Name = "txtDnsServer";
+            this.txtDnsServer.Size = new System.Drawing.Size(92, 20);
+            this.txtDnsServer.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(103, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Custom DNS server:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(800, 816);
+            this.ClientSize = new System.Drawing.Size(800, 872);
             this.Controls.Add(this.groupBoxFormActions);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip1);
@@ -297,6 +318,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBoxFormActions.ResumeLayout(false);
+            this.groupBoxFormActions.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -325,6 +347,8 @@
         private System.Windows.Forms.Label lblValidIPCount;
         private System.Windows.Forms.GroupBox groupBoxFormActions;
         private System.Windows.Forms.ToolStripMenuItem saveIPsTocsvFileFromIPListToolStripMenuItem;
+        private System.Windows.Forms.TextBox txtDnsServer;
+        private System.Windows.Forms.Label label2;
     }
 }
 
