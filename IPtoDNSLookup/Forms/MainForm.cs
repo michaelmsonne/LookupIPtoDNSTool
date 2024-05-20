@@ -188,6 +188,20 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
                     try
                     {
                         IPHostEntry hostEntry = Dns.GetHostEntry(IPAddress.Parse(ipAddress));
+                        /*string dnsServer = txtDnsServer.Text.Trim();
+                        IPHostEntry hostEntry;
+
+                        if (string.IsNullOrEmpty(dnsServer))
+                        {
+                            // Use default DNS server
+                            hostEntry = Dns.GetHostEntry(IPAddress.Parse(ipAddress));
+                        }
+                        else
+                        {
+                            // Use specified DNS server
+                            var dnsClient = new DnsClient(dnsServer);
+                            hostEntry = dnsClient.GetHostEntry(ipAddress);
+                        }*/
 
                         DataRow row = _table.NewRow();
                         row["IP Address"] = ipAddress;
