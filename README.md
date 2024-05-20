@@ -1,4 +1,4 @@
-# LookupIPtoDNSTool
+﻿# LookupIPtoDNSTool
 
 <p align="center">
   <a href="https://github.com/michaelmsonne/LookupIPtoDNSTool"><img src="https://img.shields.io/github/languages/top/michaelmsonne/LookupIPtoDNSTool.svg"></a>
@@ -8,7 +8,7 @@
 
 <div align="center">
   <a href="https://github.com/michaelmsonne/LookupIPtoDNSTool/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Report a Bug</a>
-  �
+  ·
   <a href="https://github.com/michaelmsonne/LookupIPtoDNSTool/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
   .
   <a href="https://github.com/michaelmsonne/LookupIPtoDNSTool/discussions">Ask a Question</a>
@@ -103,7 +103,7 @@ This tool is built using asynchronous programming techniques to provide efficien
 - Build the solution in Visual Studio
 
 ### Installation
-You can either clone this repository and build the project yourself.
+You can either clone this repository and build the project yourself or download the latest release from the [releases page](../../releases/latest) and you are good to go - just run the .exe! 🤘
 
 ## Download
 
