@@ -23,14 +23,14 @@ namespace LookupsIPsToDNS.Forms
         // Declare processedIPs as a member variable of the class
         private readonly HashSet<string> _processedIPs = new HashSet<string>();
 
-        #region MyRegion
-
-        public string AssemblyVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
         public MainForm()
         {
             InitializeComponent();
         }
+
+        #region Main shared code
+
+        public string AssemblyVersion => Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         public sealed override string Text
         {
@@ -99,7 +99,7 @@ namespace LookupsIPsToDNS.Forms
             if (iPs.Any())
             {
                 var invalidIpList = string.Join("\n", iPs);
-                var result = MessageBox.Show($@"The following IP addresses are invalid:
+                var result = MessageBox.Show($@"The following IP address(es) are invalid:
 
 {invalidIpList}
 
@@ -142,6 +142,7 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
                 loadIPsFromcsvFileToolStripMenuItem.Enabled = false;
                 buttonGetCurrentConnectedIPs.Enabled = false;
 
+                // Check if DataGridView has any rows and update Clear button accordingly
                 if (!_lookupWorker.IsBusy)
                 {
                     _table.Clear();
@@ -187,30 +188,23 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
 
                     try
                     {
+                        // Perform the DNS lookup for the IP address
                         IPHostEntry hostEntry = Dns.GetHostEntry(IPAddress.Parse(ipAddress));
-                        /*string dnsServer = txtDnsServer.Text.Trim();
-                        IPHostEntry hostEntry;
 
-                        if (string.IsNullOrEmpty(dnsServer))
-                        {
-                            // Use default DNS server
-                            hostEntry = Dns.GetHostEntry(ipAddress);
-                        }
-                        else
-                        {
-                            // Use specified DNS server
-                            hostEntry = GetHostEntry(ipAddress, dnsServer);
-                        }*/
-
+                        // Create a new DataRow for the DataTable
                         DataRow row = _table.NewRow();
+
+                        // Add the IP address and domain name to the DataRow
                         row["IP Address"] = ipAddress;
                         row["Domain Name"] = hostEntry.HostName;
 
                         // update DataTable on UI thread
                         Invoke(new Action(() =>
                         {
+                            // Add the DataRow to the DataTable
                             _table.Rows.Add(row);
                             int lastIndex = resultDataGridView.Rows.Count - 1;
+
                             // Scroll to the end of the DataGridView control
                             resultDataGridView.FirstDisplayedScrollingRowIndex = lastIndex;
                         }));
@@ -344,7 +338,7 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
                         }
                         else
                         {
-                            // Handle invalid IP addresses (you may want to display a message or log it)
+                            // Handle invalid IP addresses
                             MessageBox.Show($@"Invalid IP address: {ipAddress}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
@@ -354,19 +348,13 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
             // Return the list of valid IP addresses
             return ipAddresses;
         }
-
-        private void buttonLookup_Click(object sender, EventArgs e)
-        {
-            // Get the IP addresses from the text box and start the lookup
-            DoIpLookupWork();
-        }
-
+        
         private void UpdateTextBox(TcpConnectionInformation[] connections)
         {
             // Clear existing text in the TextBox
             ipAddressTextBox.Text = string.Empty;
 
-            // Display remote IP addresses in the TextBox
+            // Display remote IP addresses in the TextBox (excluding loopback addresses)
             foreach (var connection in connections)
             {
                 if (!IPAddress.IsLoopback(connection.RemoteEndPoint.Address))
@@ -398,6 +386,25 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
             }
 
             return validIPCount;
+        }
+
+        private void ipAddressTextBox_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // Split the multiline TextBox text into lines
+                string[] lines = ipAddressTextBox.Text.Split('\n');
+
+                // Count the number of valid IP addresses
+                int validIPCount = CountValidIPs(lines);
+
+                // Display the result
+                lblValidIPCount.Text = $@"{validIPCount}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"Error counting valid IP addresses: {ex.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void SaveIpsToLookupToCsv(string filePath)
@@ -479,9 +486,33 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
             }
         }
 
+        private void saveIPsTocsvFileFromIPListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Open a SaveFileDialog to ask the user where to save the file
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = @"CSV files (*.csv)|*.csv";
+                saveFileDialog.Title = @"Save IPs to CSV";
+                saveFileDialog.DefaultExt = "csv";
+                saveFileDialog.AddExtension = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName;
+                    SaveIpsToLookupToCsv(filePath);
+                }
+            }
+        }
+
         #endregion Menu code
 
         #region Form code
+
+        private void buttonLookup_Click(object sender, EventArgs e)
+        {
+            // Get the IP addresses from the text box and start the lookup
+            DoIpLookupWork();
+        }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
@@ -596,134 +627,6 @@ Do you want to remove them?", @"Invalid IP Address", MessageBoxButtons.YesNo, Me
         }
 
         #endregion Form code
-
-        private void ipAddressTextBox_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                // Split the multiline TextBox text into lines
-                string[] lines = ipAddressTextBox.Text.Split('\n');
-
-                // Count the number of valid IP addresses
-                int validIPCount = CountValidIPs(lines);
-
-                // Display the result
-                lblValidIPCount.Text = $@"{validIPCount}";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($@"Error counting valid IP addresses: {ex.Message}", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void saveIPsTocsvFileFromIPListToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // Open a SaveFileDialog to ask the user where to save the file
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-            {
-                saveFileDialog.Filter = @"CSV files (*.csv)|*.csv";
-                saveFileDialog.Title = @"Save IPs to CSV";
-                saveFileDialog.DefaultExt = "csv";
-                saveFileDialog.AddExtension = true;
-
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    string filePath = saveFileDialog.FileName;
-                    SaveIpsToLookupToCsv(filePath);
-                }
-            }
-        }
-
-        #region Custom DNS
-
-        private IPHostEntry GetHostEntry(string ipAddress, string dnsServer)
-        {
-            byte[] query = BuildQuery(ipAddress);
-
-            using (var udpClient = new UdpClient())
-            {
-                udpClient.Connect(dnsServer, 53);
-                udpClient.Send(query, query.Length);
-
-                IPEndPoint remoteEndPoint = null;
-                byte[] serverResponse = udpClient.Receive(ref remoteEndPoint);
-
-                return ParseResponse(serverResponse);
-            }
-        }
-
-        private byte[] BuildQuery(string ipAddress)
-        {
-            // Determine query type (A for IPv4, AAAA for IPv6)
-            bool isIPv6 = IPAddress.Parse(ipAddress).AddressFamily == AddressFamily.InterNetworkV6;
-            ushort queryType = isIPv6 ? (ushort)0x1c : (ushort)0x01;
-
-            var query = new byte[32];
-            query[0] = 1; // transaction ID
-            query[1] = 0; // transaction ID
-            query[2] = 1; // standard query
-            query[3] = 0; // standard query
-            query[4] = 0; // questions
-            query[5] = 1; // questions
-            query[6] = 0; // answers
-            query[7] = 0; // answers
-            query[8] = 0; // authoritative
-            query[9] = 0; // authoritative
-            query[10] = 0; // additional
-            query[11] = 0; // additional
-
-            string[] ipAddressParts = ipAddress.Split('.');
-            int pos = 12;
-            foreach (string part in ipAddressParts)
-            {
-                byte length = (byte)part.Length;
-                query[pos++] = length;
-                foreach (char c in part)
-                {
-                    query[pos++] = (byte)c;
-                }
-            }
-
-            query[pos++] = 0; // end of string
-            query[pos++] = (byte)(queryType >> 8); // type high byte
-            query[pos++] = (byte)(queryType & 0xff); // type low byte
-            query[pos++] = 0; // class IN high byte
-            query[pos++] = 1; // class IN low byte
-
-            return query;
-        }
-
-        private IPHostEntry ParseResponse(byte[] response)
-        {
-            int qNameEnd = 12;
-            while (response[qNameEnd] != 0) qNameEnd++;
-
-            int answerIndex = qNameEnd + 5;
-
-            int dataLength = (response[answerIndex + 9] << 8) | response[answerIndex + 10];
-            int dataOffset = answerIndex + 11;
-
-            string hostName = "";
-            for (int i = dataOffset; i < dataOffset + dataLength; i++)
-            {
-                if (response[i] == 0) break;
-                if (response[i] < 32)
-                {
-                    hostName += ".";
-                }
-                else
-                {
-                    hostName += (char)response[i];
-                }
-            }
-
-            return new IPHostEntry
-            {
-                HostName = hostName,
-                AddressList = new[] { IPAddress.Parse(hostName) }
-            };
-        }
-
-        #endregion Custom DNS
+        
     }
 }
