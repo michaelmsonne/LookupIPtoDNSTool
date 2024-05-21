@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ipAddressTextBox = new System.Windows.Forms.TextBox();
             this.groupBoxIPs = new System.Windows.Forms.GroupBox();
@@ -42,19 +39,17 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonExporttoCSV = new System.Windows.Forms.Button();
-            this.buttonCleanOutput = new System.Windows.Forms.Button();
             this.resultDataGridView = new System.Windows.Forms.DataGridView();
+            this.buttonCleanOutput = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadIPsFromcsvFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonGetCurrentConnectedIPs = new System.Windows.Forms.Button();
             this.groupBoxFormActions = new System.Windows.Forms.GroupBox();
-            this.saveIPsTocsvFileFromIPListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtDnsServer = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.groupBoxIPs.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultDataGridView)).BeginInit();
@@ -109,7 +104,7 @@
             // cleanupIPListButton
             // 
             this.cleanupIPListButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cleanupIPListButton.Location = new System.Drawing.Point(6, 129);
+            this.cleanupIPListButton.Location = new System.Drawing.Point(8, 102);
             this.cleanupIPListButton.Name = "cleanupIPListButton";
             this.cleanupIPListButton.Size = new System.Drawing.Size(117, 23);
             this.cleanupIPListButton.TabIndex = 4;
@@ -121,7 +116,7 @@
             // 
             this.cancelButton.Enabled = false;
             this.cancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cancelButton.Location = new System.Drawing.Point(6, 100);
+            this.cancelButton.Location = new System.Drawing.Point(8, 73);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(198, 23);
             this.cancelButton.TabIndex = 3;
@@ -132,7 +127,7 @@
             // lookupButton
             // 
             this.lookupButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lookupButton.Location = new System.Drawing.Point(6, 71);
+            this.lookupButton.Location = new System.Drawing.Point(8, 44);
             this.lookupButton.Name = "lookupButton";
             this.lookupButton.Size = new System.Drawing.Size(198, 23);
             this.lookupButton.TabIndex = 2;
@@ -164,11 +159,20 @@
             this.buttonExporttoCSV.UseVisualStyleBackColor = true;
             this.buttonExporttoCSV.Click += new System.EventHandler(this.buttonExporttoCSV_Click);
             // 
+            // resultDataGridView
+            // 
+            this.resultDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.resultDataGridView.Location = new System.Drawing.Point(7, 18);
+            this.resultDataGridView.Name = "resultDataGridView";
+            this.resultDataGridView.ReadOnly = true;
+            this.resultDataGridView.Size = new System.Drawing.Size(545, 704);
+            this.resultDataGridView.TabIndex = 0;
+            // 
             // buttonCleanOutput
             // 
             this.buttonCleanOutput.Enabled = false;
             this.buttonCleanOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonCleanOutput.Location = new System.Drawing.Point(129, 129);
+            this.buttonCleanOutput.Location = new System.Drawing.Point(131, 102);
             this.buttonCleanOutput.Name = "buttonCleanOutput";
             this.buttonCleanOutput.Size = new System.Drawing.Size(75, 23);
             this.buttonCleanOutput.TabIndex = 1;
@@ -176,45 +180,12 @@
             this.buttonCleanOutput.UseVisualStyleBackColor = true;
             this.buttonCleanOutput.Click += new System.EventHandler(this.buttonCleanOutput_Click);
             // 
-            // resultDataGridView
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.resultDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.resultDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.resultDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            this.resultDataGridView.Location = new System.Drawing.Point(7, 18);
-            this.resultDataGridView.Name = "resultDataGridView";
-            this.resultDataGridView.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.resultDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.resultDataGridView.Size = new System.Drawing.Size(545, 704);
-            this.resultDataGridView.TabIndex = 0;
-            // 
             // statusStrip
             // 
             this.statusStrip.BackColor = System.Drawing.Color.White;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 850);
+            this.statusStrip.Location = new System.Drawing.Point(0, 818);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(800, 22);
             this.statusStrip.SizingGrip = false;
@@ -256,6 +227,14 @@
             this.loadIPsFromcsvFileToolStripMenuItem.Text = "Load IPs from .csv file to lookup";
             this.loadIPsFromcsvFileToolStripMenuItem.Click += new System.EventHandler(this.loadIPsFromcsvFileToolStripMenuItem_Click);
             // 
+            // saveIPsTocsvFileFromIPListToolStripMenuItem
+            // 
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem.BackColor = System.Drawing.Color.White;
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Name = "saveIPsTocsvFileFromIPListToolStripMenuItem";
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Text = "Save IP´s to .csv file from IP list";
+            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Click += new System.EventHandler(this.saveIPsTocsvFileFromIPListToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.BackColor = System.Drawing.Color.White;
@@ -277,9 +256,7 @@
             // 
             // groupBoxFormActions
             // 
-            this.groupBoxFormActions.Controls.Add(this.label2);
             this.groupBoxFormActions.Controls.Add(this.buttonCleanOutput);
-            this.groupBoxFormActions.Controls.Add(this.txtDnsServer);
             this.groupBoxFormActions.Controls.Add(this.buttonGetCurrentConnectedIPs);
             this.groupBoxFormActions.Controls.Add(this.cleanupIPListButton);
             this.groupBoxFormActions.Controls.Add(this.lookupButton);
@@ -287,42 +264,17 @@
             this.groupBoxFormActions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBoxFormActions.Location = new System.Drawing.Point(12, 687);
             this.groupBoxFormActions.Name = "groupBoxFormActions";
-            this.groupBoxFormActions.Size = new System.Drawing.Size(212, 160);
+            this.groupBoxFormActions.Size = new System.Drawing.Size(212, 132);
             this.groupBoxFormActions.TabIndex = 6;
             this.groupBoxFormActions.TabStop = false;
             this.groupBoxFormActions.Text = "Actions";
-            // 
-            // saveIPsTocsvFileFromIPListToolStripMenuItem
-            // 
-            this.saveIPsTocsvFileFromIPListToolStripMenuItem.BackColor = System.Drawing.Color.White;
-            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Name = "saveIPsTocsvFileFromIPListToolStripMenuItem";
-            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Text = "Save IP´s to .csv file from IP list";
-            this.saveIPsTocsvFileFromIPListToolStripMenuItem.Click += new System.EventHandler(this.saveIPsTocsvFileFromIPListToolStripMenuItem_Click);
-            // 
-            // txtDnsServer
-            // 
-            this.txtDnsServer.Location = new System.Drawing.Point(112, 45);
-            this.txtDnsServer.Name = "txtDnsServer";
-            this.txtDnsServer.Size = new System.Drawing.Size(92, 20);
-            this.txtDnsServer.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 48);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(103, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Custom DNS server:";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(800, 872);
+            this.ClientSize = new System.Drawing.Size(800, 840);
             this.Controls.Add(this.groupBoxFormActions);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip1);
@@ -345,7 +297,6 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBoxFormActions.ResumeLayout(false);
-            this.groupBoxFormActions.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -374,8 +325,6 @@
         private System.Windows.Forms.Label lblValidIPCount;
         private System.Windows.Forms.GroupBox groupBoxFormActions;
         private System.Windows.Forms.ToolStripMenuItem saveIPsTocsvFileFromIPListToolStripMenuItem;
-        private System.Windows.Forms.TextBox txtDnsServer;
-        private System.Windows.Forms.Label label2;
     }
 }
 
